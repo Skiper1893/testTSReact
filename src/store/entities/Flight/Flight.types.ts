@@ -1,0 +1,1 @@
+export const GET_FLIGHTS = 'FLIGHT.GET_FLIGHTS'
