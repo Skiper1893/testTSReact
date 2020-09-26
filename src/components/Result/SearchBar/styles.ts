@@ -16,4 +16,12 @@ export const SearchBarContainerWrapper = styled(ContainerWrapper)`
     .search_btn {
         height: 4em;
     }
+    
+    .numbersOf {
+        max-width: 75px;
+    }
+    
+    .dates {
+        max-width: 175px;
+    }
 `

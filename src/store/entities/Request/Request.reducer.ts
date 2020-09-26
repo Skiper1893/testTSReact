@@ -1,4 +1,14 @@
 import * as TYPES from './Request.types';
+import moment from "moment";
+
+export type SortTypes = 'best' | 'price' | 'duration' | 'stops';
+
+export const SortType = {
+    BEST: 'best',
+    PRICE: 'price',
+    DURATION: 'duration',
+    STOPS: 'stops'
+}
 
 export interface RequestInterface {
     origin: string | undefined,
@@ -8,18 +18,20 @@ export interface RequestInterface {
     numberOfAdults: number,
     numberOfChildren: number,
     page: number | undefined,
-    sortBy?: string
+    sortBy?: SortTypes,
+    filter?: string
 }
 
 const initState: RequestInterface = {
     origin: undefined,
     destination: undefined,
-    leaveDate: undefined,
-    returnDate: undefined,
+    leaveDate: moment(new Date()).format('YYYY-MM-DD'),
+    returnDate: moment(new Date()).add(1, 'day').format('YYYY-MM-DD'),
     numberOfAdults: 1,
     numberOfChildren: 0,
     page: 1,
-    sortBy: undefined,
+    sortBy: 'price',
+    filter: '{"filterStops": [1]}'
 }
 
 const reducer = (state = initState, action: any) => {
@@ -28,7 +40,7 @@ const reducer = (state = initState, action: any) => {
             return {
                 ...state,
                 ...action.payload
-        }
+            }
         default:
             return state;
     }

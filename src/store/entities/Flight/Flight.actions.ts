@@ -3,6 +3,7 @@ import * as TYPES from './Flight.types';
 import { filterFlightsFetchedData } from '../../../utils/filterFlights';
 import {stringify} from 'query-string';
 import _ from 'lodash';
+import {ResultRowInteface} from "./Flight.reducer";
 
 const requiredParams = [
     'origin',
@@ -11,16 +12,22 @@ const requiredParams = [
     'numberOfAdults',
     'numberOfChildren'
 ];
+
+export const choseFlight = (flight: ResultRowInteface) => {
+    return {
+        type: TYPES.CHOSE_FLIGHT,
+        payload: flight
+    }
+}
+
 export const fetchFlights = () => (dispatch: Function, getState: Function) => {
     const { requestOptions } = getState();
     const toValidate = _.pick(requestOptions, requiredParams);
-    const isInvalid = Object.values(toValidate).some(item => !item);
+    const isInvalid = Object.values(toValidate).some(item => (item === undefined || item === null));
+
     if(isInvalid) return;
     let query = stringify(requestOptions);
-    console.log('-------query--------');
-    console.log(query);
     let url = `/getflights?${query}`
-
     dispatch({
         type: TYPES.GET_FLIGHTS,
         request: {

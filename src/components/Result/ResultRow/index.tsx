@@ -1,76 +1,51 @@
 import React from 'react';
 import {
-    ResultRowContainer,
     FlightContainer,
     Border,
-    DescriptionContainer,
-    DepartureContainer,
     ResultRowContainerWrapper,
     PriceContainer,
     Price,
-    DescriptionWrapper,
     PriceBorder
 } from './styles';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faLongArrowAltRight, faLongArrowAltLeft} from '@fortawesome/free-solid-svg-icons'
+import {ResultRowInteface} from '../../../store/entities/Flight/Flight.reducer';
+import ResultDescriptionContainer from "../ResultDescriptionContainer";
+import { useDispatch } from "react-redux";
+import {choseFlight} from "../../../store/entities/Flight/Flight.actions";
+import { history } from "../../../store";
 
+const ResultRow = (props: ResultRowInteface) => {
 
-const ResultRow = (props: any) => {
+    const dispatch = useDispatch()
+
+    const {
+        carrier,
+        inFlight,
+        outFlight,
+        price
+    } = props;
+
+    const handleChoseFlight = () => {
+        dispatch(choseFlight({...props}));
+        history.push('/checkout');
+    }
+
     return (
-        <ResultRowContainerWrapper>
+        <ResultRowContainerWrapper onClick={handleChoseFlight} className="row">
             <PriceContainer>
+                <Price>{carrier}</Price>
                 <h3>Price:</h3>
-                <Price>140</Price>
+                <Price>{price}$</Price>
             </PriceContainer>
-            <PriceBorder />
+            <PriceBorder/>
             <FlightContainer>
-                <DescriptionContainer>
-                    <DepartureContainer>
-                        <DescriptionWrapper>
-                            <h3>7:40</h3>
-                            <span>09/25/20</span>
-                        </DescriptionWrapper>
-                        <DescriptionWrapper>
-                            <h4>Kyiv</h4>
-                            <span>(AAA)</span>
-                        </DescriptionWrapper>
-                    </DepartureContainer>
-                    <FontAwesomeIcon className="arrows-icons" icon={faLongArrowAltRight}/>
-                    <DepartureContainer>
-                        <DescriptionWrapper>
-                            <h3>9:40</h3>
-                            <span>09/25/20</span>
-                        </DescriptionWrapper>
-                        <DescriptionWrapper>
-                            <h4>Dnepr</h4>
-                            <span>(AAA)</span>
-                        </DescriptionWrapper>
-                    </DepartureContainer>
-                </DescriptionContainer>
-                <Border/>
-                <DescriptionContainer>
-                    <DepartureContainer>
-                        <DescriptionWrapper>
-                            <h3>9:40</h3>
-                            <span>09/25/20</span>
-                        </DescriptionWrapper>
-                        <DescriptionWrapper>
-                            <h4>Dnepr</h4>
-                            <span>(AAA)</span>
-                        </DescriptionWrapper>
-                    </DepartureContainer>
-                    <FontAwesomeIcon className="arrows-icons" icon={faLongArrowAltLeft}/>
-                    <DepartureContainer>
-                        <DescriptionWrapper>
-                            <h3>7:40</h3>
-                            <span>09/25/20</span>
-                        </DescriptionWrapper>
-                        <DescriptionWrapper>
-                            <h4>Kyiv</h4>
-                            <span>(AAA)</span>
-                        </DescriptionWrapper>
-                    </DepartureContainer>
-                </DescriptionContainer>
+                <ResultDescriptionContainer flight={outFlight} type="out"/>
+                {inFlight ? (
+                    <>
+                        <Border/>
+                        <ResultDescriptionContainer flight={inFlight} type="in"/>
+                    </>
+                ) : null
+                }
             </FlightContainer>
         </ResultRowContainerWrapper>
     )

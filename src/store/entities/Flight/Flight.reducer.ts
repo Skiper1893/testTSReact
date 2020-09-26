@@ -1,12 +1,14 @@
 import * as TYPES from './Flight.types';
 import { success, abort, error } from '@redux-requests/core'
 
-interface FlightInteface {
+export interface FlightInteface {
     leaving: string,
     arriving: string,
     duration: number,
     originAirportCode: string,
     destinationAirportCode: string,
+    destinationAirportFullName: string,
+    originAirportFullName: string,
     arriveDateTime: string,
     departDateTime: string,
     flightNumber: string,
@@ -18,6 +20,8 @@ export interface ResultRowInteface {
     carrier: string,
     destination: string,
     origin: string,
+    originCity: string | null,
+    destinationCity: string | null,
     startDateTime: string,
     endDateTime: string,
     flightKey: string,
@@ -33,7 +37,8 @@ export interface FlightStateInterface {
     flights: Array<ResultRowInteface> | null,
     lastSelectedFlightKey: string | null,
     totalPages: number,
-    totalFlights: number | null
+    totalFlights: number | null,
+    currentFlight: ResultRowInteface | null
 }
 
 const initialState: FlightStateInterface = {
@@ -41,7 +46,8 @@ const initialState: FlightStateInterface = {
     lastSelectedFlightKey: null,
     flights: [],
     totalPages: 1,
-    totalFlights: null
+    totalFlights: null,
+    currentFlight: null
 }
 
 const reducer = (state = initialState, action: any = {}) => {
@@ -50,6 +56,11 @@ const reducer = (state = initialState, action: any = {}) => {
             return {
                 ...state,
                 loading: true
+            }
+        case TYPES.CHOSE_FLIGHT:
+            return {
+                ...state,
+                currentFlight: { ...action.payload }
             }
         case success(TYPES.GET_FLIGHTS):
             if(!action.response.data) return state;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FlexContainer = styled.div`
+export const FlexContainer = styled.div`
     display: flex;
     width: 100%;
 `
@@ -9,6 +9,7 @@ export const ResultRowContainer = styled(FlexContainer)`
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    margin: 0.5em;
 `
 
 export const PriceContainer = styled(ResultRowContainer)`
@@ -28,6 +29,7 @@ export const ResultRowContainerWrapper = styled(ResultRowContainer)`
     border: 1px solid #0a5ca5;
     border-radius: 30px;
     cursor: pointer;
+    box-shadow: 0px 1px 7px 0px rgba(0,0,0,0.75);
     &:hover {
         opacity: 0.9;
     }
@@ -41,41 +43,16 @@ export const FlightContainer = styled(FlexContainer)`
 `
 
 export const Border = styled.div`
-    width: 90%;
+    width: 25%;
     height: 2px;
     border-bottom: 1px solid #fff;
-`
-
-export const DescriptionContainer = styled(FlexContainer)`
-    flex-direction: row;
-    .arrows-icons {
-        width: 40px;
-        height: 40px;
-        color: #fff;
-    }
-`
-
-export const DepartureContainer = styled(FlexContainer)`
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    color: #fff;
-    h3, h4 {
-        margin: 0;
-    }
- 
-`
-
-export const Price = styled.h3`
-    color: #fff
-`
-
-export const DescriptionWrapper = styled.div`
-    flex: 0 30%;
- 
 `
 
 export const PriceBorder = styled.div`
     height: 65%;
     border-right: 1px solid #ffffff;
+`
+
+export const Price = styled.h3`
+    color: #fff
 `

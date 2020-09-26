@@ -17,3 +17,8 @@ code {
   height: 100%;
   width: 100%;
 }
+
+.arrows-icons {
+  width: 40px !important;
+  height: 40px !important;
+}

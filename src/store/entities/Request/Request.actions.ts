@@ -6,6 +6,7 @@ export const addRequestParam = (paramName: string, value: any) => {
         type: TYPES.ADD_REQUEST_PARAM,
         payload: {
             [paramName]: value
+
         }
     }
 }
